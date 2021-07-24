@@ -109,3 +109,7 @@ local function set_mappings()
   end
 end
 
+local function close_window()
+  api.nvim_win_close(win, true)
+end
+
