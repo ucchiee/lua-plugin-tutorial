@@ -50,3 +50,28 @@ local function open_window()
   win = api.nvim_open_win(buf, true, opts)
   api.nvim_command('au BufWipeout <buffer> exe "silent bwipeout! "'..border_buf)
 end
+
+local position = 0
+local function update_view(direction)
+  position = position + direction
+  if position < 0 then position = 0 end -- HEAD~0 is the newest state
+
+  -- we will use vim systemlist function which run shell
+  -- command and return result as list
+  local result = vim.fn.systemlist('git diff-tree --no-commit-id --name-only -r  HEAD~'..position)
+
+  -- with small indentation results will look better
+  for k,v in pairs(result) do
+    result[k] = '  '..result[k]
+  end
+
+  api.nvim_buf_set_lines(buf, 0, -1, false, {
+      center('What have i done?'),
+      center('HEAD~'..position),
+      ''
+    })
+
+  api.nvim_buf_set_lines(buf, 3, -1, false, result)
+  api.nvim_buf_set_option(buf, 'modifiable', false)
+end
+
