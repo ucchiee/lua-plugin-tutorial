@@ -1,2 +1,3 @@
 # lua-plugin-tutorial
-Tutorial of developing plugin for neovim in Lua.
+
+Tutorial for developing neovim plugin in Lua.
