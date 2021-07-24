@@ -120,3 +120,9 @@ local function move_cursor()
   api.nvim_win_set_cursor(win, {new_pos, 0})
 end
 
+-- Open file under cursor
+local function open_file()
+  local str = api.nvim_get_current_line()
+  close_window()
+  api.nvim_command('edit '..str)
+end
