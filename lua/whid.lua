@@ -81,3 +81,31 @@ local function center(str)
   return string.rep(' ', shift) .. str
 end
 
+local function set_mappings()
+  local mappings = {
+    ['['] = 'update_view(-1)',
+    [']'] = 'update_view(1)',
+    ['<cr>'] = 'open_file()',
+    h = 'update_view(-1)',
+    l = 'update_view(1)',
+    q = 'close_window()',
+    k = 'move_cursor()'
+  }
+
+  for k,v in pairs(mappings) do
+    api.nvim_buf_set_keymap(buf, 'n', k, ':lua require"whid".'..v..'<cr>', {
+        nowait = true, noremap = true, silent = true
+      })
+  end
+
+  -- disable other chars
+  local other_chars = {
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'i', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+  }
+  for k,v in ipairs(other_chars) do
+    api.nvim_buf_set_keymap(buf, 'n', v, '', { nowait = true, noremap = true, silent = true })
+    api.nvim_buf_set_keymap(buf, 'n', v:upper(), '', { nowait = true, noremap = true, silent = true })
+    api.nvim_buf_set_keymap(buf, 'n',  '<c-'..v..'>', '', { nowait = true, noremap = true, silent = true })
+  end
+end
+
