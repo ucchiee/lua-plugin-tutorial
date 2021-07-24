@@ -126,3 +126,11 @@ local function open_file()
   close_window()
   api.nvim_command('edit '..str)
 end
+
+local function whid()
+  position = 0 -- if you want to preserve last displayed state just omit this line
+  open_window()
+  set_mappings()
+  update_view(0)
+  api.nvim_win_set_cursor(win, {4, 0}) -- set cursor on first list entry
+end
