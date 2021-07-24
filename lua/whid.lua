@@ -113,3 +113,10 @@ local function close_window()
   api.nvim_win_close(win, true)
 end
 
+-- Our file list start at line 4, so we can prevent reaching above it
+-- from bottm the end of the buffer will limit movment
+local function move_cursor()
+  local new_pos = math.max(4, api.nvim_win_get_cursor(win)[1] - 1)
+  api.nvim_win_set_cursor(win, {new_pos, 0})
+end
+
